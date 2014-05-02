@@ -1,0 +1,13 @@
+# Start of Settings
+# End of Settings
+
+$DupeKernelHosts = @($VMH | Get-VMHostNetworkAdapter -VMKernel | select VMHost,DeviceName,IP | Group-Object IP | where {$_.Count -gt 1} | %{$_.Group})
+$DupeKernelHosts
+
+$Title = "Hosts with Duplicate VMkernel IPs"
+$Header = "Hosts with Duplicate VMkernel IPs : $(@($DupeKernelHosts).count)"
+$Comments = "The following hosts have duplicate VMkernel IPs. This can cause network communication failures where hosts are unresponsive, vMotions fail, etc."
+$Display = "Table"
+$Author = "Kyle Ruddy"
+$PluginVersion = 1.0
+$PluginCategory = "vSphere"
